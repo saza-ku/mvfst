@@ -161,4 +161,15 @@ bool operator!=(
     const ServerConnectionIdParams& lhs,
     const ServerConnectionIdParams& rhs);
 
+struct QuicLbConfig {
+  explicit QuicLbConfig() = default;
+
+  size_t connectionIdLength() const;
+
+  uint8_t cr;
+  std::optional<std::vector<uint8_t>> key;
+  uint8_t serverIdLen;
+  uint8_t nonceLen;
+};
+
 } // namespace quic

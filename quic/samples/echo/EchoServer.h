@@ -16,6 +16,7 @@
 #include <quic/server/QuicServer.h>
 #include <quic/server/QuicServerTransport.h>
 #include <quic/server/QuicSharedUDPSocketFactory.h>
+#include <quic/codec/QuicLbConnectionIdAlgo.h>
 
 namespace quic {
 namespace samples {
@@ -107,6 +108,14 @@ class EchoServer {
     serverCtx->setClock(std::make_shared<fizz::SystemClock>());
     serverCtx->setSupportedAlpns(std::move(alpns_));
     server_->setFizzContext(serverCtx);
+
+    QuicLbConfig config = QuicLbConfig{};
+    config.cr = 0;
+    config.serverIdLen = 4;
+    config.nonceLen = 8;
+    std::vector<uint8_t> serverId = {1, 2, 3, 4};
+    auto connIdAlgoFactory = std::make_unique<QuicLbConnectionIdAlgoFactory>(config, serverId);
+    server_->setConnectionIdAlgoFactory(std::move(connIdAlgoFactory));
   }
 
   ~EchoServer() {

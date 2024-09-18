@@ -117,4 +117,8 @@ bool operator!=(
     const ServerConnectionIdParams& rhs) {
   return !(lhs == rhs);
 }
+
+size_t QuicLbConfig::connectionIdLength() const {
+  return serverIdLen + nonceLen + 1 + 6;
+}
 } // namespace quic

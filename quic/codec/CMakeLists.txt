@@ -6,6 +6,7 @@
 add_library(
   mvfst_codec_types
   DefaultConnectionIdAlgo.cpp
+  QuicLbConnectionIdAlgo.cpp
   PacketNumber.cpp
   QuicConnectionId.cpp
   QuicInteger.cpp
